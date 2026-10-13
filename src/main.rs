@@ -2,10 +2,12 @@
 // add arg handling to main loop
 // flesh out help with messages
 // make the command handler a fucntion in another file.
+//fixed cursed math command
 use std::io;
+mod math;
 fn main() {
     println!("
-    Welcome to Prim-Sys R \n
+    Welcome to Prim-Sys Rust \n
     Consult provided documentation in the docs folder provided with the installed release. \n 
     Version 0.0.1 [DEV] \n
     Brought to you by the Prim-Sys dev team and Collaborators. 
@@ -33,7 +35,6 @@ fn main() {
             "math" => math(command[1]),
             _ => println!("Unknow command")
         } //Matches the command and passes the argument into the pertinent function
-
     }
 }
 
@@ -51,7 +52,49 @@ fn help(arg : &str){
 
 fn math(arg : &str) {
     match arg {
-        "" => println!("Insert an argument for the required computation, fo the list of all arguments use \n help math"),
+        "" => {print!("Insert a: ");
+        let mut num = String::new();
+        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
+        let a = num;
+        let a : i64 = {match a.trim().parse::<i64>() {
+            Ok(num) => num,
+            Err(_) => return
+        }
+        };
+        print!("Insert b: ");
+        let b = {
+            let mut num = String::new();
+            io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
+            num
+        };
+        let b : i64 = {match b.trim().parse::<i64>() {
+            Ok(num) => num,
+            Err(_) => return
+        }
+        };
+        print!("Insert operation code: ");
+        let op = {
+            let mut num = String::new();
+            io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
+            num
+        };
+        let op : i64 = {match op.trim().parse::<i64>() {
+            Ok(num) => num,
+            Err(_) => return
+        }
+        };
+        let mut r : i64 ;
+        match op {
+            1 => r = math::computesum(a,b),
+            2 => r = math::computedifference(a, b),
+            3 => r = math::computetimes(a, b),
+            4 => r = math::computeintdivisor(a, b),
+            _ => r = 0
+        }
+        print!("\n the computed value for {a} to {b} in operation {op} is {r}")
+        },
         _ => println!("Invalid argument")
     }
 }
+
+

@@ -1,7 +1,8 @@
 // Dedicated Mathematics module 
 // accepts 1 argument  max and return an err when not given such arg.
 // implements integer sum,  difference, times and incomplete division
-// note: compute-divisor. 
+// TO DO: implement a handler module inside the math module to evoid packing in the main handler
+
 
 pub fn computesum(a : i64 , b : i64) -> i64 {
     let r = a + b;
@@ -26,17 +27,12 @@ pub fn computetimes(a : i64 , b : i64 ) -> i64 {
     r
 }
 
-pub fn computeintdivisor(dividend : i64  , divisor : i64 ) -> i64 {
-
-    if dividend > divisor {
-        0
+pub fn computeintdivisor(dividend : i64  , divisor : i64 ) -> Result<i64,&'static str> {
+    if divisor == 0 {
+        Err("Division by zero is undefined")
     }
     else {
-        let c:i64 = 0;
-        while dividend > divisor {
-            let dividend = dividend - divisor;
-            let c = c + 1; 
-        }  
-        c
+        let r = dividend/divisor;
+        Ok(r)
     }
 }

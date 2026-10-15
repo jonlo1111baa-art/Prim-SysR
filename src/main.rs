@@ -55,40 +55,30 @@ fn math(arg : &str) {
         "" => {print!("Insert a: ");
         let mut num = String::new();
         io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-        let a = num;
-        let a : i64 = {match a.trim().parse::<i64>() {
+        let a : i64 = match num.trim().parse() {
             Ok(num) => num,
             Err(_) => return
-        }
         };
         print!("Insert b: ");
-        let b = {
-            let mut num = String::new();
-            io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-            num
-        };
-        let b : i64 = {match b.trim().parse::<i64>() {
+        let mut num = String::new();
+        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
+        let b : i64 = match num.trim().parse() {
             Ok(num) => num,
             Err(_) => return
-        }
         };
         print!("Insert operation code: ");
-        let op = {
-            let mut num = String::new();
-            io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-            num
-        };
-        let op : i64 = {match op.trim().parse::<i64>() {
+        let mut num = String::new();
+        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
+        let op : i64 = match num.trim().parse::<i64>() {
             Ok(num) => num,
             Err(_) => return
-        }
         };
-        let mut r : i64 ;
+        let r : i64 ;
         match op {
             1 => r = math::computesum(a,b),
             2 => r = math::computedifference(a, b),
             3 => r = math::computetimes(a, b),
-            4 => r = math::computeintdivisor(a, b),
+            4 => r = math::computeintdivisor(a, b).unwrap(),
             _ => r = 0
         }
         print!("\n the computed value for {a} to {b} in operation {op} is {r}")

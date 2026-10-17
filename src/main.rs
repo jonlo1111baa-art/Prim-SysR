@@ -4,7 +4,24 @@
 // make the command handler a fucntion in another file.
 //fixed cursed math command
 use std::io;
+
+use crate::math::math_handler;
 mod math;
+struct UMinput{
+    a : i64,
+    b : i64,
+    op : String
+}
+impl UMinput {
+     fn clear_a(&mut self) -> i64 {
+        self.a = 0;
+        self.a
+     }
+     fn clear_b(&mut self) -> i64 {
+        self.b = 0;
+        self.b
+     }
+ }
 fn main() {
     println!("
     Welcome to Prim-Sys Rust \n
@@ -52,39 +69,38 @@ fn help(arg : &str){
 
 fn math(arg : &str) {
     match arg {
-        "" => {print!("Insert a: ");
-        let mut num = String::new();
-        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-        let a : i64 = match num.trim().parse() {
-            Ok(num) => num,
-            Err(_) => return
-        };
-        print!("Insert b: ");
-        let mut num = String::new();
-        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-        let b : i64 = match num.trim().parse() {
-            Ok(num) => num,
-            Err(_) => return
-        };
-        print!("Insert operation code: ");
-        let mut num = String::new();
-        io::stdin().read_line(&mut num).expect("Fatal err: failed to read line");
-        let op : i64 = match num.trim().parse::<i64>() {
-            Ok(num) => num,
-            Err(_) => return
-        };
-        let r : i64 ;
-        match op {
-            1 => r = math::computesum(a,b),
-            2 => r = math::computedifference(a, b),
-            3 => r = math::computetimes(a, b),
-            4 => r = math::computeintdivisor(a, b).unwrap(),
-            _ => r = 0
+        "" => {
+            let input = take_input();
+            let r = math_handler(input.op.as_str(), input.a, input.b);
+            let r = {match r {
+                Ok(num) => num,
+                Err(meg) => {println!("{meg}");return}
+            }};
+            println!("{} {} {} = {r}", input.a , input.op, input.b)
         }
-        print!("\n the computed value for {a} to {b} in operation {op} is {r}")
-        },
         _ => println!("Invalid argument")
     }
 }
 
-
+fn take_input() -> UMinput {
+    println!("Input a:");
+    let mut tx = String::new();
+    io::stdin().read_line(&mut tx).unwrap();
+    let x : i64 = {match tx.trim().parse() {
+        Ok(num) => num,
+        Err(_) => 0
+    }};
+    println!("Input b:");
+    let mut ty = String::new();
+    io::stdin().read_line(&mut ty).unwrap();
+    let y : i64 = {match ty.trim().parse() {
+        Ok(num) => num,
+        Err(_) => 0
+    }};
+    println!("Input operation (+ , - , * , /)");
+    let mut tz = String::new();
+    io::stdin().read_line(&mut tz).unwrap();
+    let z = tz; 
+    let g= UMinput { a: (x), b: (y) , op : {z}};
+    g
+}

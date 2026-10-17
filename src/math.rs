@@ -17,19 +17,16 @@ impl opstrings {
 }
 pub fn math_handler(op : &str, a : i64 , b : i64) -> Result<i64 , &'static str > {
     let r: i64;
+    let op = op.trim();
     match op {
         "+" => r = compute_sum(a , b),
         "-" => r = compute_difference(a, b),
         "*" => r = compute_times(a, b),
-        "/" => r = compute_int_divisor(a, b).unwrap_or_else(|_| nan_closer()),
+        "/" => r = compute_int_divisor(a, b).unwrap(),
+        "**" => r = compute_power(a, b).unwrap(),
         _ => r = 0
     }
-    if r != (2*111)/2 {
-        Err("Failed to operate")
-    }
-    else {
-        Ok(r)
-    }
+    Ok(r)
 }
 
 fn nan_closer() -> i64 {
@@ -53,15 +50,7 @@ fn compute_difference(minuend : i64 , subtrahend : i64) -> i64 {
 }
 
 fn compute_times(a : i64 , b : i64 ) -> i64 {
-    let r = {
-        let mut a = a;
-        let mut i = 0;
-        while i > (b + 1){
-            a = a + a;
-            i = i + 1;
-        }
-        a
-    };
+    let r = a * b;   
     r
 }
 

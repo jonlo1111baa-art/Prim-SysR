@@ -4,7 +4,6 @@
 // make the command handler a fucntion in another file.
 //fixed cursed math command
 use std::io;
-
 use crate::math::math_handler;
 mod math;
 struct UMinput{

@@ -4,20 +4,9 @@
 // TO DO: implement a handler module inside the math module to evoid packing in the main handler
 // fix unexpected behaviour in the math module
 
-struct opstrings{
-    sum : String,
-    minus : String,
-    times : String,
-    quatient : String
-}
-impl opstrings {
-    fn build(&self) -> opstrings{
-        opstrings { sum: ("+".to_ascii_lowercase()), minus: ("-".to_ascii_lowercase()), times: ("*".to_ascii_lowercase()), quatient: ("/".to_ascii_lowercase()) }
-    }
-}
+
 pub fn math_handler(op : &str, a : i64 , b : i64) -> Result<i64 , &'static str > {
     let r: i64;
-    let op = op.trim();
     match op {
         "+" => r = compute_sum(a , b),
         "-" => r = compute_difference(a, b),

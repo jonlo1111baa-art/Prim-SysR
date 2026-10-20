@@ -50,3 +50,12 @@ pub fn take_userci() -> commons::Twocoord{
     let c = Twocoord{x : {x}, y : {y}};
     c
 }
+
+pub fn take_usernum() -> i64{
+    print!("Enter some number: ");
+    let x : i64= match readline().parse() {
+        Ok(num) => num,
+        Err(_) => {print!("Failed to parse "); 0}
+    };
+    x
+}

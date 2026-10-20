@@ -13,9 +13,3 @@ pub struct UMOinput{
     pub b : i64,
     pub op : String
 }
-pub struct Opstrings{
-    pub sum : String,
-    pub minus : String,
-    pub times : String,
-    pub quatient : String
-}

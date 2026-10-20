@@ -1,7 +1,9 @@
-//! # PRIM-SYS-R
+//! ### PRIM-SYS-R
 //! 
 //! Prim-Sys-r is the rust port of the now deprecated Prim-Sys, originaly written in C#,
 //! Prim-Sys-r is Prim-Sys rewriten and expanded in the Rust programming lenguaje taken advantage of its low-level features
+//! Note that the original Prim-sys has stopped development
+//! the only dependencies of this crate is the rust Standard Library, only take note of this if you may be building Prim-sys-r
 //!
 //! this main crate does the following:
 //! 
@@ -66,7 +68,7 @@ fn help(arg : &str){
     }
 }
 
-/// ## Math Function
+/// Math module handler for the main primsys module
 /// Takes user input, calls handler of the math module and prints the result of the operations
 fn math(arg : &str) {
     match arg {
@@ -80,7 +82,13 @@ fn math(arg : &str) {
             println!("{} {} {} = {}", input.a , input.op, input.b, r)
         }
         "lerp" => {let c1 = io::take_userci();
-            println!("Yet to be implemented");}
+                   let c2 = io::take_userci();
+                   let x = io::take_usernum();
+                   let nr = match math::lerp(&c1, &c2, x) {
+                       Some(num) => num,
+                       None => {println!("lerp fuction error: x is equal to zero"); 0}
+                   };
+                   println!("The value of {} of the interpolant between ({},{}) and ({},{}) is {}", x, c1.x, c1.y, c2.x, c2.y, nr)}
         _ => println!("Invalid argument")
     }
 }

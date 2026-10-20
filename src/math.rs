@@ -48,19 +48,14 @@ fn compute_int_divisor(dividend : i64  , divisor : i64 ) -> Result<i64,&'static 
 /// Takes 2 coordinates c1, c2
 /// finds the slope of the linear polinomial wich crosses them
 /// then eveluates such polynomial at x
-fn lerp(c1 : commons::Twocoord, c2 : commons::Twocoord, x : i64) -> Option<i64> {
-    if x < c1.x {
+pub fn lerp(c1 : &commons::Twocoord, c2 : &commons::Twocoord, x : i64) -> Option<i64> {
+    if x == 0{
         None
     }
-    else if x > c2.x{
-        None
-    }
-    else {
-        let m = (c2.y - c1.y)/(c2.x - c1.x);
-        let r = x * m;
+    else{
+        let r = (x*c2.y - x*c1.y - c1.x*c2.y + c1.x*c1.y)/(c2.x);
         Some(r)
     }
-    
 }
 
 fn compute_power(a : i64,b : i64) -> Result<i64, &'static str> {

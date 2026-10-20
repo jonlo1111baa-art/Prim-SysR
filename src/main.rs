@@ -3,15 +3,17 @@
 //! Prim-Sys-r is the rust port of the now deprecated Prim-Sys, originaly written in C#,
 //! Prim-Sys-r is Prim-Sys rewriten and expanded in the Rust programming lenguaje taken advantage of its low-level features
 //!
-//! ## Features
-//!     -Taking user imput  
-//!     -Realizing the main execution loop
-//!     -Calling handlers of other modules and crates
+//! this main crate does the following:
+//! 
+//!  -Taking user input  
+//!  -Realizing the main execution loop
+//!  -Calling handlers of other crates
+//!  -Realizing some default operations
 
-use std::io;
 use crate::math::math_handler;
 mod math;
 mod commons;
+mod io;
 
 /// ## Main Fuction
 /// -Command entry point
@@ -26,12 +28,7 @@ fn main() {
     ");
     'primery:loop {
         print!(">");
-        let command = {
-            let mut com= String::new(); 
-            io::stdin().read_line(&mut com).expect("Failed to read line"); // Assings a value to the empy string com
-            com //assings com as a non mut
-        }; 
-        
+        let command = io::readline();
         let mut command = command.trim().split_whitespace().collect::<Vec<&str>>(); 
         //Splits command into command and argument via a a str reference
         if command.len() == 0 {
@@ -74,7 +71,7 @@ fn help(arg : &str){
 fn math(arg : &str) {
     match arg {
         "" => {
-            let input = take_userm_input();
+            let input = io::take_usermoi();
             let r = math_handler(input.op.as_str().trim(), input.a, input.b);
             let r = {match r {
                 Ok(num) => num,
@@ -82,31 +79,8 @@ fn math(arg : &str) {
             }};
             println!("{} {} {} = {}", input.a , input.op, input.b, r)
         }
+        "lerp" => {let c1 = io::take_userci();
+            println!("Yet to be implemented");}
         _ => println!("Invalid argument")
     }
-}
-
-/// ## Take User Math input 
-/// it returns a User Math input Struct containing numbers a , b and some string
-fn take_userm_input() -> commons::UMinput {
-    println!("Input a:");
-    let mut tx = String::new();
-    io::stdin().read_line(&mut tx).unwrap();
-    let x : i64 = {match tx.trim().parse() {
-        Ok(num) => num,
-        Err(_) => 0
-    }};
-    println!("Input b:");
-    let mut ty = String::new();
-    io::stdin().read_line(&mut ty).unwrap();
-    let y : i64 = {match ty.trim().parse() {
-        Ok(num) => num,
-        Err(_) => 0
-    }};
-    println!("Input operation (+ , - , * , /)");
-    let mut tz = String::new();
-    io::stdin().read_line(&mut tz).unwrap();
-    let z = tz; 
-    let g= commons::UMinput { a: (x), b: (y) , op : {z}};
-    g
 }

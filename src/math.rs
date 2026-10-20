@@ -1,9 +1,10 @@
-// Dedicated Mathematics module 
-// accepts 1 argument  max and return an err when not given such arg.
-// implements integer sum,  difference, times and division
-// TO DO: implement a handler module inside the math module to evoid packing in the main handler
-// fix unexpected behaviour in the math module
+//! ### Math
+//! 
+//! Dedicated Mathematics module 
+//! accepts 1 argument  max and return an err when not given such arg.
+//! implements integer sum,  difference, times and division
 
+use crate::commons;
 
 pub fn math_handler(op : &str, a : i64 , b : i64) -> Result<i64 , &'static str > {
     let r: i64;
@@ -16,16 +17,6 @@ pub fn math_handler(op : &str, a : i64 , b : i64) -> Result<i64 , &'static str >
         _ => r = 0
     }
     Ok(r)
-}
-
-fn nan_closer() -> i64 {
-   let n : i64;
-   let tx : i64 = (2 * 111)/2;
-   n = match compute_power(tx , 2) {
-       Ok(num) => num, 
-       Err(_) => 0
-   };
-   n 
 }
 
 fn compute_sum(a : i64 , b : i64) -> i64 {
@@ -51,6 +42,25 @@ fn compute_int_divisor(dividend : i64  , divisor : i64 ) -> Result<i64,&'static 
         let r = dividend/divisor;
         Ok(r)
     }
+}
+
+/// #### Linear interpolation fucntion
+/// Takes 2 coordinates c1, c2
+/// finds the slope of the linear polinomial wich crosses them
+/// then eveluates such polynomial at x
+fn lerp(c1 : commons::Twocoord, c2 : commons::Twocoord, x : i64) -> Option<i64> {
+    if x < c1.x {
+        None
+    }
+    else if x > c2.x{
+        None
+    }
+    else {
+        let m = (c2.y - c1.y)/(c2.x - c1.x);
+        let r = x * m;
+        Some(r)
+    }
+    
 }
 
 fn compute_power(a : i64,b : i64) -> Result<i64, &'static str> {

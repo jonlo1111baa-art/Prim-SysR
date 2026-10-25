@@ -11,7 +11,7 @@ pub fn readline() -> String {
     let mut tx = String::new();
     let x: String;
     match io::stdin().read_line(&mut tx) {
-        Ok(num) => x = num.to_string(),
+        Ok(_) => x = tx,
         Err(_) => {println!("Failure to read line"); x = String::new()}
     }
     x

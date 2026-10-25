@@ -12,7 +12,6 @@
 //!  -Calling handlers of other crates
 //!  -Realizing some default operations
 
-use crate::math::math_handler;
 mod math;
 mod commons;
 mod io;
@@ -38,7 +37,7 @@ fn main() {
             continue;
         }
         if command.len() == 1 {
-            command.push("");
+           command.push("");
         }
         match command[0] {
             "exit" => break 'primery,
@@ -58,23 +57,21 @@ fn main() {
 /// -lsm 
 fn help(arg : &str){
     match arg {
-        "" => println!("Test"),
-        "math" => println!("Mathematics fuction, available flags: \n -f : function flag, enable the function parser for determining a fucntion [NOT IMPLEMENTED] 
-                            \n -s : sin flag, for computing the respective sine of some angle [NOT IMPLEMENTED] 
-                            \n -c : cos flag, for computing the respective cosine of some angle [NOT IMPLEMENTED] 
-                            \n -m : memory flag, for saving the result of all following operations into a specified register,"),
+        "" => println!("PRIM-SYS-R: all in one command utility"),
+        "math" => { let tx  = math::MathDesc::build_desc();
+            println!("{}", tx.as_str())},
         "exit" => println!("exit the user process"),
         _ => println!("Invalid argument")
     }
 }
 
 /// Math module handler for the main primsys module
-/// Takes user input, calls handler of the math module and prints the result of the operations
+/// Takes user input, calls handler of the built in math module and prints the result of the operations
 fn math(arg : &str) {
     match arg {
         "" => {
             let input = io::take_usermoi();
-            let r = math_handler(input.op.as_str().trim(), input.a, input.b);
+            let r = math::math_handler(input.op.as_str().trim(), input.a, input.b);
             let r = {match r {
                 Ok(num) => num,
                 Err(meg) => {println!("{meg}");return}

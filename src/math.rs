@@ -6,6 +6,17 @@
 
 use crate::commons;
 
+pub struct MathDesc{}
+impl MathDesc {
+    pub fn build_desc () -> String{
+        let tx = String::from("Mathematics fuction, available flags: \n -f : function flag, enable the function parser for determining a fucntion [NOT IMPLEMENTED] 
+                            \n -s : sin flag, for computing the respective sine of some angle [NOT IMPLEMENTED] 
+                            \n -c : cos flag, for computing the respective cosine of some angle [NOT IMPLEMENTED] 
+                            \n -m : memory flag, for saving the result of all following operations into a specified register,");
+        tx
+    }
+}
+
 pub fn math_handler(op : &str, a : i64 , b : i64) -> Result<i64 , &'static str > {
     let r: i64;
     match op {
